@@ -38,13 +38,13 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" name="email" class="form-control" id="email" placeholder="" disabled>
+                                <input type="text" name="email" class="form-control" id="email" value="" disabled>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="" disabled>
+                                <input type="text" name="name" class="form-control" id="name" value="" disabled>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="phone">Phone</label>
-                                <input type="phone" name="phone" class="form-control" id="phone" placeholder="">
+                                <input type="phone" name="phone" class="form-control" id="phone" value="">
                             </div>
                         </div>
                     </div>
@@ -96,11 +96,18 @@
         $.ajax({
             url: "",
             type: "POST",
+            data: {
+                "id": sessionStorage.userID
+            },
             success: res => {
-                document.getElementById("imgAvatar").setAttribute("src",res.img)
+                document.getElementById("imgAvatar").setAttribute("src",res.img);
+                document.getElementById("email").setAttribute("value", res.email);
+                document.getElementById("name").setAttribute("value",res.name);
+                document.getElementById("phone").setAttribute("value", res.phone);
+
             }
         })
-        var index = document.getElementById("social")
+
         $("#socialButton").on("click", e => {
             console.log("click");
             var htmlResult =

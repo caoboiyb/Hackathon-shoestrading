@@ -20,7 +20,7 @@
     </div>
 
     <div class="container">
-        <form action="/register">
+        <form action="/register" method="POST" id="target">
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -40,10 +40,12 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <div role="alert" id="flash">
+        </div>
     </div>
 
     <hr>
-    <footer class="footer">
+    <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <p class="footer">Copyright 2017 - 2018 by SSSC, Inc.</p>
             <p class="footer float-right">
@@ -55,12 +57,49 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+            $(document).ready(function () {
+                // bind form using ajaxForm
+                $('#target').ajaxForm({
+                    url: 'http://localhost:3000/auth/login',
+                    // dataType identifies the expected content type of the server response
+                    dataType: 'json',
+                    method: 'POST',
+                    // success identifies the function to invoke when the server response
+                    // has been received
+                    success: processSuccess,
+                    error: processError
+                });
+            });
+    
+            function processSuccess(response) {
+                // 'data' is the json object returned from the server
+                console.log(response);
+                $("#flash")
+                    .addClass("alert alert-success text-center")
+                    .text("Đăng ký thành công. Đang điều hướng...")
+                    .fadeOut(3000);
+                setTimeout(function () {
+                    window.location.assign('/login');
+                }, 1000);
+            }
+    
+            function processError(jqXHR) {
+                $("#flash")
+                    .addClass("alert alert-danger text-center")
+                    .text("Tài khoản đã tồn tại. Vui lòng đăng ký lại")
+                    .fadeOut(3000);
+                setTimeout(function () {
+                    location.reload()
+                }, 1000);
+            }
+        </script>
 </body>
 
 </html>

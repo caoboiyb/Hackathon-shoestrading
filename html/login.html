@@ -23,17 +23,11 @@
         <div class="inner-bg">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-8 col-sm-offset-2 text">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6 form-box">
                         <h1>
                             <strong>Login</strong>
                         </h1>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 col-sm-offset-3 form-box">
-                        <div class="form-top">
-
-                        </div>
                         <div class="form-bottom">
                             <form role="form" action="/login" method="post" class="login-form" id="target">
                                 <div class="form-group">
@@ -43,8 +37,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="sr-only" for="form-password">Password</label>
-                                    <input type="password" name="password" placeholder="Mật khẩu..." class="form-password form-control" id="inputPassword"
-                                        required>
+                                    <input type="password" name="password" placeholder="Mật khẩu..." class="form-password form-control" id="inputPassword" required>
                                 </div>
                                 <button type="submit" class="btn-primary">Đăng nhập</button>
                             </form>
@@ -60,7 +53,7 @@
 
 
     <hr>
-    <footer class="footer">
+    <footer class="footer fixed-bottom">
         <div class="container-fluid">
             <p class="footer">Copyright 2017 - 2018 by SSSC, Inc.</p>
             <p class="footer float-right">
@@ -72,50 +65,49 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
     <script>
-        // $(document).ready(function () {
-        //     // bind form using ajaxForm
-        //     $('#target').ajaxForm({
-        //         url: 'http://localhost:3000/auth/login',
-        //         // dataType identifies the expected content type of the server response
-        //         dataType: 'json',
-        //         method: 'POST',
-        //         // success identifies the function to invoke when the server response
-        //         // has been received
-        //         success: processSuccess,
-        //         error: processError
-        //     });
-        // });
+        $(document).ready(function () {
+            // bind form using ajaxForm
+            $('#target').ajaxForm({
+                url: 'http://localhost:3000/auth/login',
+                // dataType identifies the expected content type of the server response
+                dataType: 'json',
+                method: 'POST',
+                // success identifies the function to invoke when the server response
+                // has been received
+                success: processSuccess,
+                error: processError
+            });
+        });
 
-        // function processSuccess(response) {
-        //     // 'data' is the json object returned from the server
-        //     sessionStorage.token = response.data.token;
-        //     sessionStorage.role = response.role;
-        //     console.log(response);
-        //     $("#flash")
-        //         .addClass("alert alert-success text-center")
-        //         .text("Đăng nhập thành công. Đang điều hướng...")
-        //         .fadeOut(3000);
-        //     setTimeout(function () {
-        //         window.location.assign('./index.html');
-        //     }, 1000);
-        // }
+        function processSuccess(response) {
+            // 'data' is the json object returned from the server
+            sessionStorage.userID = response.userID;
+            console.log(response);
+            $("#flash")
+                .addClass("alert alert-success text-center")
+                .text("Đăng nhập thành công. Đang điều hướng...")
+                .fadeOut(3000);
+            setTimeout(function () {
+                window.location.assign('/');
+            }, 1000);
+        }
 
-        // function processError(jqXHR) {
-        //     $("#flash")
-        //         .addClass("alert alert-danger text-center")
-        //         .text("Bạn đã nhập sai mật khẩu hoặc tài khoản. Vui lòng đăng nhập lại")
-        //         .fadeOut(3000);
-        //     setTimeout(function () {
-        //         location.reload()
-        //     }, 1000);
-        // }
+        function processError(jqXHR) {
+            $("#flash")
+                .addClass("alert alert-danger text-center")
+                .text("Bạn đã nhập sai mật khẩu hoặc tài khoản. Vui lòng đăng nhập lại")
+                .fadeOut(3000);
+            setTimeout(function () {
+                location.reload()
+            }, 1000);
+        }
     </script>
 </body>
 
